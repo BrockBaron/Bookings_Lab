@@ -16,6 +16,53 @@ const createRouter = function (collection) {
         });
     })
 
+//GET - SPECIFIC
+
+    router.get('/:id', (req, res) => {
+        const id = req.params.id;
+        collection
+        .findOne({_id: ObjectId(id)})
+        .then((doc) => res.json(doc))
+        .catch((err) => {
+            console.error(err);
+            res.status(500);
+            res.json({status: 500, error: err})
+            })
+    })
+
+
+//CREATE
+
+    router.post('/', (req, res) => {
+        const newData = req.body;
+        conllection
+        .insertOne(newData)
+        .then((result)=> res.json(result))
+        .catch((err) => {
+            console.error(err);
+            res.status(500);
+            res.json({status: 500, error: err})
+            })
+    })
+
+//DELETE
+
+    router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    collection
+    .deletOne({ _id: ObjectId(id)})
+    .then((result) => res.json(result) )
+    .catch((err) => {
+        console.error(err);
+        res.status(500);
+        res.json({status: 500, error: err})
+        })
+
+
+    })
+
+
+
     return router;
 }
 
